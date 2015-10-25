@@ -1,10 +1,13 @@
 require.main.paths.splice(0, 0, process.env.NODE_PATH);
 import remote from 'remote';
-var Menu = remote.require('menu');
 var app = remote.require('app');
-import SideBar from './SideBar.react'
+import Containers from './components/Containers.react'
+var Menu = remote.require('menu');
+var template = require('./menu');
+
+Menu.setApplicationMenu(Menu.buildFromTemplate(template()));
 
 ReactDOM.render(
-    <SideBar />,
+    <Containers />,
     document.getElementById('example')
 );

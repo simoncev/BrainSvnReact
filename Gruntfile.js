@@ -1,5 +1,3 @@
-var path = require('path');
-var execFile = require('child_process').execFile;
 var packageJson = require('./package.json');
 var electron = require('electron-prebuilt');
 
@@ -70,6 +68,31 @@ module.exports = function (grunt) {
                 }
             }
         },
+        copy: {
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: '.',
+                    src: ['package.json', 'settings.json', 'index.html'],
+                    dest: 'build/'
+                }, {
+                    expand: true,
+                    cwd: 'images/',
+                    src: ['**/*'],
+                    dest: 'build/'
+                }, {
+                    expand: true,
+                    cwd: 'fonts/',
+                    src: ['**/*'],
+                    dest: 'build/'
+                }, {
+                    cwd: 'node_modules/',
+                    src: Object.keys(packageJson.dependencies).map(function (dep) { return dep + '/**/*';}),
+                    dest: 'build/node_modules/',
+                    expand: true
+                }]
+            },
+        },
 
         // styles
         less: {
@@ -103,7 +126,7 @@ module.exports = function (grunt) {
 
         shell: {
             electron: {
-                command: electron + ' ' + 'build/browser.js',
+                command: electron + ' ' + 'build',
                 options: {
                     async: true,
                     execOptions: {
@@ -133,11 +156,15 @@ module.exports = function (grunt) {
             less: {
                 files: ['styles/**/*.less'],
                 tasks: ['less']
+            },
+            copy: {
+                files: ['index.html'],
+                tasks: ['newer:copy:dev']
             }
         }
     });
 
-    grunt.registerTask('default', ['newer:babel', 'less', 'shell:electron', 'watchChokidar']);
+    grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
 
     if (process.platform === 'win32') {
         grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'compress']);

@@ -6,9 +6,11 @@ var MenuTemplate = function() {
                 {
                     label: 'Quit BrainSvn',
                     accelerator: 'Cmd+Q',
-                    role: 'quit'
+                    click: function() {
+                        app.quit();
+                    }
                 }
-            ],
+            ]
         },
         {
             label: 'File',

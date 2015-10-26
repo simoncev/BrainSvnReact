@@ -9,5 +9,5 @@ Menu.setApplicationMenu(Menu.buildFromTemplate(template()));
 
 ReactDOM.render(
     <Containers />,
-    document.getElementById('example')
+    document.getElementById('body')
 );

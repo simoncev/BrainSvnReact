@@ -1,29 +1,46 @@
-import Header from './Header.react'
+import HeaderBar from './HeaderBar.react'
+import SideBar from './SideBar.react'
 
 var Containers = React.createClass({
+    handleClickDockerTerminal: function () {
+        metrics.track('Opened Docker Terminal', {
+            from: 'app'
+        });
+        machine.dockerTerminal();
+    },
+    handleClickReportIssue: function () {
+        metrics.track('Opened Issue Reporter', {
+            from: 'app'
+        });
+        shell.openExternal('https://github.com/kitematic/kitematic/issues/new');
+    },
+    handleClickPreferences: function () {
+        metrics.track('Opened Preferences', {
+            from: 'app'
+        });
+        this.context.router.transitionTo('preferences');
+    },
+    handleScroll: function (e) {
+        if (e.target.scrollTop > 0 && !this.state.sidebarOffset) {
+            this.setState({
+                sidebarOffset: e.target.scrollTop
+            });
+        } else if (e.target.scrollTop === 0 && this.state.sidebarOffset) {
+            this.setState({
+                sidebarOffset: 0
+            });
+        }
+    },
     render: function () {
-        var sidebarHeaderClass = 'sidebar-header';
-        //if (this.state.sidebarOffset) {
-        //    sidebarHeaderClass += ' sep';
-        //}
         return (
             <div className="containers">
-                <Header />
+                <HeaderBar />
                 <div className="containers-body">
                     <div className="sidebar">
-                        <section className={sidebarHeaderClass}>
-                            <h4>Containers</h4>
-                            <div className="create">
-                            </div>
-                        </section>
-                        <section className="sidebar-containers" onScroll={this.handleScroll}>
-                            <ContainerList containers={this.state.sorted} newContainer={this.state.newContainer} />
-                        </section>
-                        <section className="sidebar-buttons">
-                            <span className="btn-sidebar btn-terminal" onClick={this.handleClickDockerTerminal} onMouseEnter={this.handleMouseEnterDockerTerminal} onMouseLeave={this.handleMouseLeaveDockerTerminal}><span className="icon icon-docker-cli"></span><span className="text">DOCKER CLI</span></span>
-                            <span className="btn-sidebar btn-feedback" onClick={this.handleClickReportIssue} onMouseEnter={this.handleMouseEnterDockerTerminal} onMouseLeave={this.handleMouseLeaveDockerTerminal}><span className="icon icon-feedback"></span></span>
-                            <span className="btn-sidebar btn-preferences" onClick={this.handleClickPreferences} onMouseEnter={this.handleMouseEnterDockerTerminal} onMouseLeave={this.handleMouseLeaveDockerTerminal}><span className="icon icon-preferences"></span></span>
-                        </section>
+                        <SideBar />
+                    </div>
+                    <div className="main-container">
+                        Main Container
                     </div>
                 </div>
             </div>

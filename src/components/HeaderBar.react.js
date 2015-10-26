@@ -1,11 +1,18 @@
-import remote from 'remote';
-import classNames from 'classnames';
-import util from '../utils/Util';
+import RepoAdd from './RepoAdd.react'
 
-module.exports = React.createClass({
-   render: function() {
-       return (
-           <div className="header"></div>
-       );
-   }
+var HeaderBar = React.createClass({
+    render: function () {
+        return (
+            <div className="header">
+                <div className="left-header">
+                    <RepoAdd />
+                </div>
+                <div className="right-header">
+
+                </div>
+            </div>
+        );
+    }
 });
+
+module.exports = HeaderBar;

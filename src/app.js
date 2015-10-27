@@ -1,9 +1,9 @@
-require.main.paths.splice(0, 0, process.env.NODE_PATH);
 import remote from 'remote';
-var app = remote.require('app');
-import Containers from './components/Containers.react'
 var Menu = remote.require('menu');
 var template = require('./menu');
+var React = require('react');
+var ReactDOM = require('react-dom');
+import Containers from './components/Containers.react'
 
 Menu.setApplicationMenu(Menu.buildFromTemplate(template()));
 

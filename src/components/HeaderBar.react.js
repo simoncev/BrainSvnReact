@@ -1,4 +1,5 @@
 import RepoAdd from './RepoAdd.react'
+var React = require('react');
 
 var HeaderBar = React.createClass({
     render: function () {

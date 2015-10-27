@@ -1,5 +1,6 @@
 import HeaderBar from './HeaderBar.react'
 import SideBar from './SideBar.react'
+var React = require('react');
 
 var Containers = React.createClass({
     render: function () {

@@ -39,16 +39,66 @@
     color: @gray-normal;
   }
 
+  .bubble {
+    display: block;
+    position: absolute;
+    width: 450px;
+    height: 150px;
+    padding: 0;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 1px;
+    z-index: 1;
+    top: 52px;
+    left: -15px;
+  }
+
+  .bubble:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 15px 17px;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -17px;
+    left: 12px;
+  }
+
   .gray-normal {
     background-color: @gray-normal;
   }
 
+  .repo-add-header {
+    border-bottom: @gray-lightest solid 1px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .repo-add-header-btn {
+    color: @navy-blue;
+    background-color: white;
+    border: 1px solid transparent;
+    border-color: #ccc;
+    font-size: 11px;
+    text-transform: none;
+  }
+
+  .btn-default.active, .btn-default:active, .btn-default:hover, .open>.dropdown-toggle.btn-default, .btn-default:focus, .btn-default.focus, .btn-default:hover {
+    background-color: @navy-blue !important;
+    color: white !important;
+  }
+
+  .bubble:extend(.popover-content) {
+    width: 500px;
+    height: 200px;
+    color: black;
+  }
+
+  .popover {
+    max-width: none !important;
+  }
+
 }
-
-.bubble:extend(.popover-content) {
-  width: 200px;
-  height: 200px;
-  color: black;
-}
-
-

@@ -24,7 +24,7 @@ var RepoAdd = React.createClass({
             <div className="repo-add">
                 <div className="repo-add-plus"><i className="fa fa-plus-square repo-add-plus"
                                                   onClick={this.handleClick}></i>
-                    { this.state.showBubble ? <RepoAddBubble /> : null }
+                    { this.state.showBubble ? <RepoAddBubble updateState={this.handleClick}/> : null }
                 </div>
             </div>
         );
@@ -36,6 +36,7 @@ var RepoAddBubble = React.createClass({
         return {option: 'add'};
     },
     handleClick: function (option) {
+        console.log('click');
         this.setState({option: option});
     },
     chooseFolder: function () {
@@ -45,7 +46,7 @@ var RepoAddBubble = React.createClass({
 
     },
     cancel: function () {
-
+        this.props.updateState(false);
     },
     render: function () {
         return (
@@ -61,14 +62,12 @@ var RepoAddBubble = React.createClass({
                     </ButtonGroup>
                 </div>
                 <div className="repo-add-container">
-                    <label htmlFor="repo-add-path">Local Path</label><input type="text" placeholder="repository path" id="repo-add-path" />
+                    <label htmlFor="repo-add-path">Local Path</label><input type="text" id="repo-add-path" />
                     <Button className="repo-add-header-btn" onClick={this.chooseFolder}>Choose..</Button>
                 </div>
                 <div className="repo-add-create-close">
-                    <ButtonToolbar>
-                        <Button className="repo-add-header-btn" onClick={this.createLocalRepository}>Create & Add Repository</Button>
-                        <Button className="repo-add-header-btn" onClick={this.cancel}>Cancel</Button>
-                    </ButtonToolbar>
+                    <Button className="repo-add-header-btn" onClick={this.createLocalRepository}>Create & Add Repository</Button>
+                    <Button className="repo-add-header-btn" onClick={this.cancel}>Cancel</Button>
                 </div>
             </div>
         );

@@ -73,12 +73,38 @@
     border-bottom: @gray-lightest solid 1px;
     padding-bottom: 10px;
     padding-top: 10px;
-    .repo-add-container {
-      height: 60px;
-      text-align: left;
-      font-size: 0.8em;
-      padding-left: 10px;
+  }
 
+  .repo-add-container {
+    height: 60px;
+    text-align: left;
+    font-size: 0.8em;
+    padding: 15px;
+    font-weight: normal;
+
+    label {
+      display: inline-block;
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+      margin-right: 10px;
+      font-weight: normal;
+    }
+
+    input {
+      width: 300px;
+      margin-right: 10px;
+      position: relative;
+      height: 20px;
+      top: 2px;
+    }
+
+    .repo-add-header-btn {
+      position: relative;
+      top: -1px;
+      text-align: center;
+      line-height: 11px;
+      height: 2em;
     }
   }
 
@@ -89,6 +115,10 @@
     border-color: #ccc;
     font-size: 11px;
     text-transform: none;
+  }
+
+  .repo-add-create-close {
+    margin: 10px;
   }
 
   .btn-default.active, .btn-default:active, .btn-default:hover, .open > .dropdown-toggle.btn-default, .btn-default:focus, .btn-default.focus, .btn-default:hover {

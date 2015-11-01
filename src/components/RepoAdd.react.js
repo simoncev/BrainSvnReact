@@ -1,7 +1,8 @@
 import $ from 'jquery';
+var remote = require('remote');
+var dialog = remote.require('dialog');
 var React = require('react');
-import {ButtonGroup, Button} from 'react-bootstrap';
-import classnames from 'classnames';
+import {ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap';
 
 var RepoAdd = React.createClass({
     componentDidMount: function () {
@@ -21,7 +22,8 @@ var RepoAdd = React.createClass({
     render: function () {
         return (
             <div className="repo-add">
-                <div className="repo-add-plus"><i className="fa fa-plus-square fa-2x repo-add-plus" onClick={this.handleClick}></i>
+                <div className="repo-add-plus"><i className="fa fa-plus-square repo-add-plus"
+                                                  onClick={this.handleClick}></i>
                     { this.state.showBubble ? <RepoAddBubble /> : null }
                 </div>
             </div>
@@ -31,31 +33,42 @@ var RepoAdd = React.createClass({
 
 var RepoAddBubble = React.createClass({
     getInitialState: function () {
-        return {active: true};
+        return {option: 'add'};
     },
-    handleGroupClick: function(e) {
-        // Getting an array of DOM elements
-        // Then finding which element was clicked
-        var nodes = Array.prototype.slice.call( e.currentTarget.children );
-        var index = nodes.indexOf( e.target );
-        this.setState({ active: index });
+    handleClick: function (option) {
+        this.setState({option: option});
     },
-    handleClick: function(event, selectedEvent) {
-        this.setState({ active: false });
+    chooseFolder: function () {
+
+    },
+    createLocalRepository: function () {
+
+    },
+    cancel: function () {
+
     },
     render: function () {
-        let classes = classnames('repo-add-header-btn', {active: this.state.active});
         return (
             <div className="bubble">
                 <div className="repo-add-header">
-                    <ButtonGroup onClick={this.handleGroupClick}>
-                        <Button className={classes} onClick={this.handleClick}>Add</Button>
-                        <Button className="repo-add-header-btn" onClick={this.handleClick}>Create</Button>
-                        <Button className="repo-add-header-btn" onClick={this.handleClick}>Checkout</Button>
+                    <ButtonGroup>
+                        <Button className="repo-add-header-btn" active={this.state.option == 'add'}
+                                onClick={this.handleClick.bind(this, 'add')}>Add</Button>
+                        <Button className="repo-add-header-btn" active={this.state.option == 'create'}
+                                onClick={this.handleClick.bind(this, 'create')}>Create</Button>
+                        <Button className="repo-add-header-btn" active={this.state.option == 'checkout'}
+                                onClick={this.handleClick.bind(this, 'checkout')}>Checkout</Button>
                     </ButtonGroup>
                 </div>
                 <div className="repo-add-container">
-
+                    <label htmlFor="repo-add-path">Local Path</label><input type="text" placeholder="repository path" id="repo-add-path" />
+                    <Button className="repo-add-header-btn" onClick={this.chooseFolder}>Choose..</Button>
+                </div>
+                <div className="repo-add-create-close">
+                    <ButtonToolbar>
+                        <Button className="repo-add-header-btn" onClick={this.createLocalRepository}>Create & Add Repository</Button>
+                        <Button className="repo-add-header-btn" onClick={this.cancel}>Cancel</Button>
+                    </ButtonToolbar>
                 </div>
             </div>
         );

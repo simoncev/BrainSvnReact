@@ -2,8 +2,8 @@ import $ from 'jquery';
 var remote = require('remote');
 var dialog = remote.require('dialog');
 var React = require('react');
-import repoListActions from './actions/RepoListActions';
-import repoListStore from './stores/RepoListStore';
+import RepoListActions from '../actions/RepoListActions';
+import RepoListStore from '../stores/RepoListStore';
 
 import {ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap';
 
@@ -17,7 +17,10 @@ var RepoAdd = React.createClass({
         window.removeEventListener('click', this._hideBubble, false);
     },
     getInitialState: function () {
-        return {showBubble: false}
+        return {
+            showBubble: false,
+            repos: RepoListStore.getState()
+        }
     },
     handleClick: function () {
         this.setState({showBubble: !this.state.showBubble});
@@ -37,7 +40,7 @@ var RepoAdd = React.createClass({
 var RepoAddBubble = React.createClass({
     getInitialState: function () {
         return {
-            option: 'add', folder: '',
+            option: 'add', folder: ''
         };
     },
     handleClick: function (option) {
@@ -56,7 +59,8 @@ var RepoAddBubble = React.createClass({
         this.setState({folder: folder});
     },
     createLocalRepository: function () {
-        repoListActions.add(this.state.folder);
+        RepoListActions.add(this.state.folder);
+        this.props.updateState(false);
     },
     cancel: function () {
         this.props.updateState(false);

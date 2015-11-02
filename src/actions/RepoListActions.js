@@ -1,15 +1,10 @@
-import alt from './alt';
+import alt from '../alt';
 
 class RepoListActions {
-    create(path) {
-        this.dispatch({});
-        return {path};
-    }
 
     add(path) {
-        this.dispatch({});
-        return {path};
+        this.dispatch(path);
     }
 }
 
-module.exports = alt.createActions(RepoListActions);
+export default alt.createActions(RepoListActions);

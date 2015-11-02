@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var $ = require('jquery');
 var React = require('react');
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
 import RepoListActions from '../actions/RepoListActions';
@@ -14,13 +15,23 @@ var SideBar = React.createClass({
     componentWillUnmount() {
         RepoListStore.unlisten(this.onChange)
     },
+    handleClick(e) {
+        var siblings = e.target.siblings;
+        console.log(e.target);
+        if (siblings !== undefined) {
+            siblings.each(function (sibling) {
+                $(sibling).removeClass('active');
+            });
+        }
+        $(e.target).addClass('active');
+    },
     onChange() {
         this.setState(RepoListStore.getState())
     },
     renderRepos() {
         return this.state.repos.map((repo, i) => {
             return (
-                <ListGroupItem href="#" active key={i}>{repo}</ListGroupItem>
+                <ListGroupItem href="#" key={i} active={i == 1} onClick={this.handleClick}>{repo}</ListGroupItem>
             )
         })
     },

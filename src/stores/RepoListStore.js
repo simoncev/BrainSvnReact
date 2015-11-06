@@ -1,5 +1,6 @@
 import alt from '../alt';
 import RepoListActions from '../actions/RepoListActions'
+var RepoUtil = require('../utils/RepoUtil');
 
 class RepoListStore {
     constructor() {
@@ -12,8 +13,8 @@ class RepoListStore {
 
     }
 
-    add(repo) {
-        this.repos.push(repo);
+    add(repoPath) {
+        this.repos.push(repoPath);
     }
 
     static all() {

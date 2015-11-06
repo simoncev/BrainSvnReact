@@ -4,6 +4,7 @@ var dialog = remote.require('dialog');
 var React = require('react');
 import RepoListActions from '../actions/RepoListActions';
 import RepoListStore from '../stores/RepoListStore';
+import RepoUtil from '../utils/RepoUtil';
 
 import {ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap';
 
@@ -50,12 +51,18 @@ var RepoAddBubble = React.createClass({
         var folder = dialog.showOpenDialog({
             title: 'Choose Repository path',
             defaultPath: '/Users/etb/',
-            properties: [ 'openDirectory' ]
+            properties: ['openDirectory']
         });
         this.setState({folder: folder});
     },
     changeFolder: function (e) {
         var folder = e.target.value;
+        var repo = RepoUtil.getSvnInfo(folder);
+        if (repo === true) {
+            this.state.repo({repo: repo});
+        } else {
+            this.setState({error: true});
+        }
         this.setState({folder: folder});
     },
     createLocalRepository: function () {
@@ -79,11 +86,18 @@ var RepoAddBubble = React.createClass({
                     </ButtonGroup>
                 </div>
                 <div className="repo-add-container">
-                    <label htmlFor="repo-add-path">Local Path</label><input type="text" id="repo-add-path" value={this.state.folder} onChange={this.changeFolder}/>
+                    <label htmlFor="repo-add-path">Local Path</label><input type="text" id="repo-add-path"
+                                                                            value={this.state.folder}
+                                                                            onChange={this.changeFolder}/>
                     <Button className="repo-add-header-btn" onClick={this.chooseFolder}>Choose..</Button>
+                    { this.state.error ?
+                        <div className="repo-add-header-error">This directory does not appear to be an svn
+                            repository<br/>
+                            Would you like to create a repository here instead?</div> : null }
                 </div>
                 <div className="repo-add-create-close">
-                    <Button className="repo-add-header-btn" onClick={this.createLocalRepository} disabled={this.state.folder == ''}>Create & Add Repository</Button>
+                    <Button className="repo-add-header-btn" onClick={this.createLocalRepository}
+                            disabled={this.state.repo == ''}>Create & Add Repository</Button>
                     <Button className="repo-add-header-btn" onClick={this.cancel}>Cancel</Button>
                 </div>
             </div>

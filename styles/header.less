@@ -43,11 +43,11 @@
     width: 450px;
     height: 150px;
     padding: 0;
-    background: #FFFFFF;
+    background: @bubble-background-color;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 1px;
-    z-index: 1;
+    z-index: 9999;
     top: 33px;
     left: -18px;
   }
@@ -57,7 +57,7 @@
     position: absolute;
     border-style: solid;
     border-width: 0 10px 10px;
-    border-color: #FFFFFF transparent;
+    border-color: @bubble-background-color transparent;
     display: block;
     width: 0;
     z-index: 9999;
@@ -76,7 +76,7 @@
   }
 
   .repo-add-container {
-    height: 60px;
+    min-height: 60px;
     text-align: left;
     font-size: 0.8em;
     padding: 15px;
@@ -106,6 +106,27 @@
       line-height: 11px;
       height: 2em;
     }
+
+    .repo-add-header-error {
+      text-align: center;
+      padding-top: 5px;
+    }
+
+    .repo-add-header-error:before {
+      font-family: FontAwesome;
+      content: "\f071";
+      color: orange;
+      font-size: medium;
+      position: relative;
+      left: -5px;
+    }
+
+  }
+
+  .repo-add-create-close {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: @bubble-background-color;
   }
 
   .repo-add-header-btn {
@@ -117,10 +138,6 @@
     text-transform: none;
   }
 
-  .repo-add-create-close {
-    margin: 10px;
-  }
-
   .btn-default.active, .btn-default:active, .btn-default:hover, .open > .dropdown-toggle.btn-default, .btn-default:focus, .btn-default.focus, .btn-default:hover {
     background-color: @navy-blue !important;
     color: white !important;
@@ -128,7 +145,7 @@
 
   .bubble:extend(.popover-content) {
     width: 475px;
-    height: 155px;
+    min-height: 155px;
     color: black;
   }
 

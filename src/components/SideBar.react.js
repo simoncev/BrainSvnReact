@@ -31,7 +31,7 @@ var SideBar = React.createClass({
     renderRepos() {
         return this.state.repos.map((repo, i) => {
             return (
-                <ListGroupItem href="#" key={i} active={i == 1} onClick={this.handleClick}>{repo}</ListGroupItem>
+                <ListGroupItem key={i} active={i == 1} onClick={this.handleClick}>{repo}</ListGroupItem>
             )
         })
     },

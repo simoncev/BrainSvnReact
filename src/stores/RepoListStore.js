@@ -13,8 +13,8 @@ class RepoListStore {
 
     }
 
-    add(repoPath) {
-        this.repos.push(repoPath);
+    add(repo) {
+        this.repos.push(repo);
     }
 
     static all() {

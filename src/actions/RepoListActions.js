@@ -2,8 +2,8 @@ import alt from '../alt';
 
 class RepoListActions {
 
-    add(path) {
-        this.dispatch(path);
+    add(repo) {
+        this.dispatch(repo);
     }
 }
 

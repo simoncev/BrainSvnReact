@@ -34,4 +34,4 @@ var RepoAdd = React.createClass({
     }
 });
 
-module.exports = RepoAdd;
+export default RepoAdd;

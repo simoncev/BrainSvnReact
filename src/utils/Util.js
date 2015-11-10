@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import remote from 'remote';
 var app = remote.require('app');
 
-module.exports = {
+var Util = {
     exec: function (args, options) {
         options = options || {};
 
@@ -33,12 +33,6 @@ module.exports = {
     },
     isWindows: function () {
         return process.platform === 'win32';
-    },
-    binsPath: function () {
-        return this.isWindows() ? path.join(this.home(), 'Kitematic-bins') : path.join('/usr/local/bin');
-    },
-    binsEnding: function () {
-        return this.isWindows() ? '.exe' : '';
     },
     escapePath: function (str) {
         return str.replace(/ /g, '\\ ').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
@@ -75,65 +69,6 @@ module.exports = {
         } catch (err) {}
         return settingsjson;
     },
-    isOfficialRepo: function (name) {
-        if (!name || !name.length) {
-            return false;
-        }
-
-        // An official repo is alphanumeric characters separated by dashes or
-        // underscores.
-        // Examples: myrepo, my-docker-repo, my_docker_repo
-        // Non-exapmles: mynamespace/myrepo, my%!repo
-        var repoRegexp = /^[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
-        return repoRegexp.test(name);
-    },
-    compareVersions: function (v1, v2, options) {
-        var lexicographical = options && options.lexicographical,
-            zeroExtend = options && options.zeroExtend,
-            v1parts = v1.split('.'),
-            v2parts = v2.split('.');
-
-        function isValidPart (x) {
-            return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-        }
-
-        if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-            return NaN;
-        }
-
-        if (zeroExtend) {
-            while (v1parts.length < v2parts.length) {
-                v1parts.push('0');
-            }
-            while (v2parts.length < v1parts.length) {
-                v2parts.push('0');
-            }
-        }
-
-        if (!lexicographical) {
-            v1parts = v1parts.map(Number);
-            v2parts = v2parts.map(Number);
-        }
-
-        for (var i = 0; i < v1parts.length; ++i) {
-            if (v2parts.length === i) {
-                return 1;
-            }
-            if (v1parts[i] === v2parts[i]) {
-                continue;
-            } else if (v1parts[i] > v2parts[i]) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-
-        if (v1parts.length !== v2parts.length) {
-            return -1;
-        }
-
-        return 0;
-    },
     randomId: function () {
         return crypto.randomBytes(32).toString('hex');
     },
@@ -149,3 +84,5 @@ module.exports = {
     },
     webPorts: ['80', '8000', '8080', '8888', '3000', '5000', '2368', '9200', '8983']
 };
+
+module.exports = Util;

@@ -16,4 +16,4 @@ var HeaderBar = React.createClass({
     }
 });
 
-module.exports = HeaderBar;
+export default HeaderBar;

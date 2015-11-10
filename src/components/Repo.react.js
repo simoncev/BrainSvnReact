@@ -13,4 +13,4 @@ var Repo = React.createClass({
     }
 });
 
-module.exports = Repo;
+export default Repo;

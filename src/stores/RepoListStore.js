@@ -5,7 +5,7 @@ var RepoUtil = require('../utils/RepoUtil');
 class RepoListStore {
     constructor() {
 
-        this.repos = [];
+        this.repos = RepoUtil.readRepos();
 
         this.bindListeners({
             add: RepoListActions.add
@@ -15,6 +15,7 @@ class RepoListStore {
 
     add(repo) {
         this.repos.push(repo);
+        RepoUtil.saveRepos(this.repos);
     }
 
     static all() {

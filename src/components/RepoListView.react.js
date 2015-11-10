@@ -11,7 +11,7 @@ import RepoListStore from '../stores/RepoListStore';
 var addMenu;
 var menu = new Menu();
 
-var SideBar = React.createClass({
+var RepoListView = React.createClass({
     getInitialState() {
         return RepoListStore.getState()
     },
@@ -34,13 +34,13 @@ var SideBar = React.createClass({
         console.log(e.target);
         if (siblings !== undefined) {
             siblings.each(function (sibling) {
-                $(sibling).removeClass('active');
+                $(sibling).removeClass('selected');
             });
         }
-        $(e.target).addClass('active');
+        $(e.target).addClass('selected');
     },
     onChange() {
-        this.setState(RepoListStore.getState())
+        this.setState(RepoListStore.getState());
     },
     renderRepos() {
         console.log(this.state.repos);
@@ -59,4 +59,4 @@ var SideBar = React.createClass({
     }
 });
 
-module.exports = SideBar;
+export default RepoListView;

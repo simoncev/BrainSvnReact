@@ -1,14 +1,13 @@
 import path from 'path';
-process.env.SVN_PATH = path.join(__dirname, '../Subversion/bin/');
-var util = require('util');
+import fs from 'fs';
+var Util = require('./Util');
 
 var RepoUtil = {
     getSvnInfo(repoPath) {
         var execSync = require('child_process').execSync;
         try {
-            var child = execSync(process.env.SVN_PATH + 'svn info ' + repoPath);
+            var child = execSync('svn info ' + repoPath);
         } catch (error) {
-            console.log(util.inspect(error));
             var errorMsg = error.stderr.toString();
             if (errorMsg.indexOf('E155007') != -1) {
                 return false;
@@ -26,25 +25,32 @@ var RepoUtil = {
     getRepoName(repoInfo) {
         var repoName = repoInfo[4].split('/');
         repoName = repoName[repoName.length - 1];
-        return repoName;
+        return repoName.trim();
     },
 
     getRepoUrl(repoInfo) {
         var repoUrl = repoInfo[2].split('/');
         repoUrl = repoUrl[repoUrl.length - 1];
-        return repoUrl;
+        return repoUrl.trim();
     },
 
     getRepoRevision(repoInfo) {
         var revision = repoInfo[6].split(':');
         revision = revision[revision.length - 1];
-        return revision;
+        return revision.trim();
+    },
+
+    saveRepos(repos) {
+        fs.writeFileSync(path.join(Util.home(), '.brainsvn-repos.json'), JSON.stringify(repos));
+    },
+
+    readRepos() {
+        return JSON.parse(fs.readFileSync(path.join(Util.home(), '.brainsvn-repos.json'), 'utf8'));
     }
 };
 
 /**
- *
- * Path: C:\Users\GadyBarak\Documents\Svn\trunk
+ Path: C:\Users\GadyBarak\Documents\Svn\trunk
  Working Copy Root Path: C:\Users\GadyBarak\Documents\Svn\trunk
  URL: https://lenovo-pc:8443/svn/TestRepo/trunk
  Relative URL: ^/trunk
@@ -56,6 +62,5 @@ var RepoUtil = {
  Last Changed Author: VisualSVN Server
  Last Changed Rev: 1
  Last Changed Date: 2015-11-03 21:51:37 +0200 (Tue, 03 Nov 2015)
-
  */
-module.exports = RepoUtil;
+export default RepoUtil;

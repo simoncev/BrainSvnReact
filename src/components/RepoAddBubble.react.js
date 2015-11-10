@@ -74,4 +74,4 @@ var RepoAddBubble = React.createClass({
     }
 });
 
-module.exports = RepoAddBubble;
+export default RepoAddBubble;

@@ -1,5 +1,5 @@
 import HeaderBar from './HeaderBar.react'
-import SideBar from './SideBar.react'
+import RepoListView from './RepoListView.react'
 var React = require('react');
 
 var Containers = React.createClass({
@@ -12,7 +12,7 @@ var Containers = React.createClass({
                 <HeaderBar />
                 <div className="containers-body">
                     <div className="repo-list-tree-view" style={divStyle}>
-                        <SideBar />
+                        <RepoListView />
                     </div>
                     <div className="main-container">
                         Main Container
@@ -23,4 +23,4 @@ var Containers = React.createClass({
     }
 });
 
-module.exports = Containers;
+export default Containers;
